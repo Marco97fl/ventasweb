@@ -1,29 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jenni\\source\\repos\\ventasweb\\ventasweb.csproj": {}
+    "C:\\Users\\usuario\\Desktop\\ventasweb\\ventasweb.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jenni\\source\\repos\\ventasweb\\ventasweb.csproj": {
+    "C:\\Users\\usuario\\Desktop\\ventasweb\\ventasweb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jenni\\source\\repos\\ventasweb\\ventasweb.csproj",
+        "projectUniqueName": "C:\\Users\\usuario\\Desktop\\ventasweb\\ventasweb.csproj",
         "projectName": "ventasweb",
-        "projectPath": "C:\\Users\\jenni\\source\\repos\\ventasweb\\ventasweb.csproj",
-        "packagesPath": "C:\\Users\\jenni\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jenni\\source\\repos\\ventasweb\\obj\\",
+        "projectPath": "C:\\Users\\usuario\\Desktop\\ventasweb\\ventasweb.csproj",
+        "packagesPath": "C:\\Users\\usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\usuario\\Desktop\\ventasweb\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\jenni\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.2.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\DevExpress 18.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -68,6 +67,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.0.0, )"
+            },
+            "Sendgrid": {
+              "target": "Package",
+              "version": "[9.12.0, )"
             }
           },
           "imports": [
