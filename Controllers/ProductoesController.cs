@@ -34,7 +34,7 @@ namespace ventasweb.Controllers
             }
 
             var producto = await _context.productos
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.productoId == id);
             if (producto == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,nombreProducto,fabricante,precio,enVenta,descuento")] Producto producto)
+        public async Task<IActionResult> Create([Bind("productoId,nombreProducto,fabricante,proveedor,peso,volumen,precioProd,enVenta,descripcionProd,subcategoriaId")] Producto producto)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,nombreProducto,fabricante,precio,enVenta,descuento")] Producto producto)
+        public async Task<IActionResult> Edit(int id, [Bind("productoId,nombreProducto,fabricante,proveedor,peso,volumen,precioProd,enVenta,descripcionProd,subcategoriaId")] Producto producto)
         {
-            if (id != producto.Id)
+            if (id != producto.productoId)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductoExists(producto.Id))
+                    if (!ProductoExists(producto.productoId))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace ventasweb.Controllers
             }
 
             var producto = await _context.productos
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.productoId == id);
             if (producto == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace ventasweb.Controllers
 
         private bool ProductoExists(int id)
         {
-            return _context.productos.Any(e => e.Id == id);
+            return _context.productos.Any(e => e.productoId == id);
         }
     }
 }

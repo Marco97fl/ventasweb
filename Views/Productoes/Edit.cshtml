@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="productoId" />
             <div class="form-group">
                 <label asp-for="nombreProducto" class="control-label"></label>
                 <input asp-for="nombreProducto" class="form-control" />
@@ -24,9 +24,24 @@
                 <span asp-validation-for="fabricante" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="precio" class="control-label"></label>
-                <input asp-for="precio" class="form-control" />
-                <span asp-validation-for="precio" class="text-danger"></span>
+                <label asp-for="proveedor" class="control-label"></label>
+                <input asp-for="proveedor" class="form-control" />
+                <span asp-validation-for="proveedor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="peso" class="control-label"></label>
+                <input asp-for="peso" class="form-control" />
+                <span asp-validation-for="peso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="volumen" class="control-label"></label>
+                <input asp-for="volumen" class="form-control" />
+                <span asp-validation-for="volumen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="precioProd" class="control-label"></label>
+                <input asp-for="precioProd" class="form-control" />
+                <span asp-validation-for="precioProd" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -34,9 +49,14 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="descuento" class="control-label"></label>
-                <input asp-for="descuento" class="form-control" />
-                <span asp-validation-for="descuento" class="text-danger"></span>
+                <label asp-for="descripcionProd" class="control-label"></label>
+                <input asp-for="descripcionProd" class="form-control" />
+                <span asp-validation-for="descripcionProd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="subcategoriaId" class="control-label"></label>
+                <select asp-for="subcategoriaId" class="form-control" asp-items="ViewBag.subcategoriaId"></select>
+                <span asp-validation-for="subcategoriaId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

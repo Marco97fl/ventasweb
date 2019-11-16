@@ -12,13 +12,26 @@ namespace ventasweb.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            
+
 
         }
+        public DbSet<cantidadProducto> cantidadProductos { get; set; }
+        public DbSet<Carrito> Carritos { get; set; }
+        public DbSet<Departamento> Departamentos { get; set; }
+        public DbSet<DetalleCarrito> DetalleCarritos { get; set; }
+        public DbSet<impuesto> impuestos { get; set; }
         public DbSet<Producto> productos { get; set; }
-        public DbSet<ventasweb.Models.Departamento> Departamento { get; set; }
-        public DbSet<ventasweb.Models.SubCategoria> SubCategoria { get; set; }
-        public DbSet<ventasweb.Models.Carrito> Carrito { get; set; }
-        public DbSet<ventasweb.Models.DetalleCarrito> DetalleCarrito { get; set; }
+        public DbSet<region> regiones { get; set; }
+        public DbSet<SubCategoria> SubCategorias { get; set; }
+        public DbSet<tag> tags { get; set; }
+        public DbSet<tag_prod> tag_prods { get; set; }
+        public DbSet<tarifaEnvio> tarifaEnvios { get; set; }
+        public DbSet<usuario> usuarios { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<DetalleCarrito>().HasKey(o => new { o.carritoId, o.productoId });
+            modelBuilder.Entity<tag_prod>().HasKey(o => new { o.productoId, o.tagId });
+        }
     }
 }

@@ -10,22 +10,22 @@ using ventasweb.Models;
 
 namespace ventasweb.Controllers
 {
-    public class SubCategoriaController : Controller
+    public class tarifaEnviosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public SubCategoriaController(ApplicationDbContext context)
+        public tarifaEnviosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: SubCategoria
+        // GET: tarifaEnvios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SubCategoria.ToListAsync());
+            return View(await _context.tarifaEnvios.ToListAsync());
         }
 
-        // GET: SubCategoria/Details/5
+        // GET: tarifaEnvios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ventasweb.Controllers
                 return NotFound();
             }
 
-            var subCategoria = await _context.SubCategoria
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (subCategoria == null)
+            var tarifaEnvio = await _context.tarifaEnvios
+                .FirstOrDefaultAsync(m => m.idTarifa == id);
+            if (tarifaEnvio == null)
             {
                 return NotFound();
             }
 
-            return View(subCategoria);
+            return View(tarifaEnvio);
         }
 
-        // GET: SubCategoria/Create
+        // GET: tarifaEnvios/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: SubCategoria/Create
+        // POST: tarifaEnvios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,nombreSubCategoria")] SubCategoria subCategoria)
+        public async Task<IActionResult> Create([Bind("idTarifa,valorTarifa")] tarifaEnvio tarifaEnvio)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(subCategoria);
+                _context.Add(tarifaEnvio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(subCategoria);
+            return View(tarifaEnvio);
         }
 
-        // GET: SubCategoria/Edit/5
+        // GET: tarifaEnvios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ventasweb.Controllers
                 return NotFound();
             }
 
-            var subCategoria = await _context.SubCategoria.FindAsync(id);
-            if (subCategoria == null)
+            var tarifaEnvio = await _context.tarifaEnvios.FindAsync(id);
+            if (tarifaEnvio == null)
             {
                 return NotFound();
             }
-            return View(subCategoria);
+            return View(tarifaEnvio);
         }
 
-        // POST: SubCategoria/Edit/5
+        // POST: tarifaEnvios/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,nombreSubCategoria")] SubCategoria subCategoria)
+        public async Task<IActionResult> Edit(int id, [Bind("idTarifa,valorTarifa")] tarifaEnvio tarifaEnvio)
         {
-            if (id != subCategoria.Id)
+            if (id != tarifaEnvio.idTarifa)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ventasweb.Controllers
             {
                 try
                 {
-                    _context.Update(subCategoria);
+                    _context.Update(tarifaEnvio);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SubCategoriaExists(subCategoria.Id))
+                    if (!tarifaEnvioExists(tarifaEnvio.idTarifa))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ventasweb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(subCategoria);
+            return View(tarifaEnvio);
         }
 
-        // GET: SubCategoria/Delete/5
+        // GET: tarifaEnvios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ventasweb.Controllers
                 return NotFound();
             }
 
-            var subCategoria = await _context.SubCategoria
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (subCategoria == null)
+            var tarifaEnvio = await _context.tarifaEnvios
+                .FirstOrDefaultAsync(m => m.idTarifa == id);
+            if (tarifaEnvio == null)
             {
                 return NotFound();
             }
 
-            return View(subCategoria);
+            return View(tarifaEnvio);
         }
 
-        // POST: SubCategoria/Delete/5
+        // POST: tarifaEnvios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var subCategoria = await _context.SubCategoria.FindAsync(id);
-            _context.SubCategoria.Remove(subCategoria);
+            var tarifaEnvio = await _context.tarifaEnvios.FindAsync(id);
+            _context.tarifaEnvios.Remove(tarifaEnvio);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubCategoriaExists(int id)
+        private bool tarifaEnvioExists(int id)
         {
-            return _context.SubCategoria.Any(e => e.Id == id);
+            return _context.tarifaEnvios.Any(e => e.idTarifa == id);
         }
     }
 }

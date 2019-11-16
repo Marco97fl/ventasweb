@@ -19,13 +19,22 @@
                 @Html.DisplayNameFor(model => model.fabricante)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.precio)
+                @Html.DisplayNameFor(model => model.proveedor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.peso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.volumen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precioProd)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.enVenta)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.descuento)
+                @Html.DisplayNameFor(model => model.descripcionProd)
             </th>
             <th></th>
         </tr>
@@ -40,18 +49,27 @@
                 @Html.DisplayFor(modelItem => item.fabricante)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.precio)
+                @Html.DisplayFor(modelItem => item.proveedor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.peso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.volumen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precioProd)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.enVenta)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.descuento)
+                @Html.DisplayFor(modelItem => item.descripcionProd)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.productoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.productoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.productoId">Delete</a>
             </td>
         </tr>
 }

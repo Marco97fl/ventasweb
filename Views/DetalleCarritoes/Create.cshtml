@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Detalles Compra actual</h1>
+<h1>Create</h1>
 
 <h4>DetalleCarrito</h4>
 <hr />
@@ -13,14 +13,22 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="cantidad" class="control-label"></label>
-                <input asp-for="cantidad" class="form-control" />
-                <span asp-validation-for="cantidad" class="text-danger"></span>
+                <label asp-for="carritoId" class="control-label"></label>
+                <select asp-for="carritoId" class ="form-control" asp-items="ViewBag.carritoId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="precio" class="control-label"></label>
-                <input asp-for="precio" class="form-control" />
-                <span asp-validation-for="precio" class="text-danger"></span>
+                <label asp-for="productoId" class="control-label"></label>
+                <select asp-for="productoId" class ="form-control" asp-items="ViewBag.productoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="cantidadProd" class="control-label"></label>
+                <input asp-for="cantidadProd" class="form-control" />
+                <span asp-validation-for="cantidadProd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="precioLinea" class="control-label"></label>
+                <input asp-for="precioLinea" class="form-control" />
+                <span asp-validation-for="precioLinea" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

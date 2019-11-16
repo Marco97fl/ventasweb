@@ -1,4 +1,4 @@
-﻿@model ventasweb.Models.SubCategoria
+﻿@model ventasweb.Models.tag
 
 @{
     ViewData["Title"] = "Create";
@@ -6,16 +6,16 @@
 
 <h1>Create</h1>
 
-<h4>Nueva Sub-Categoria</h4>
+<h4>tag</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="nombreSubCategoria" class="control-label"></label>
-                <input asp-for="nombreSubCategoria" class="form-control" />
-                <span asp-validation-for="nombreSubCategoria" class="text-danger"></span>
+                <label asp-for="nomTag" class="control-label"></label>
+                <input asp-for="nomTag" class="form-control" />
+                <span asp-validation-for="nomTag" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

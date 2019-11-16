@@ -10,22 +10,22 @@ using ventasweb.Models;
 
 namespace ventasweb.Controllers
 {
-    public class DepartamentoController : Controller
+    public class SubCategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public DepartamentoController(ApplicationDbContext context)
+        public SubCategoriasController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Departamento
+        // GET: SubCategorias
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Departamento.ToListAsync());
+            return View(await _context.SubCategorias.ToListAsync());
         }
 
-        // GET: Departamento/Details/5
+        // GET: SubCategorias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ventasweb.Controllers
                 return NotFound();
             }
 
-            var departamento = await _context.Departamento
-                .FirstOrDefaultAsync(m => m.departamentoId == id);
-            if (departamento == null)
+            var subCategoria = await _context.SubCategorias
+                .FirstOrDefaultAsync(m => m.subcategoriaId == id);
+            if (subCategoria == null)
             {
                 return NotFound();
             }
 
-            return View(departamento);
+            return View(subCategoria);
         }
 
-        // GET: Departamento/Create
+        // GET: SubCategorias/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Departamento/Create
+        // POST: SubCategorias/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("departamentoId,nombreDepartamento")] Departamento departamento)
+        public async Task<IActionResult> Create([Bind("subcategoriaId,nombreSubCategoria,departamentoId")] SubCategoria subCategoria)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(departamento);
+                _context.Add(subCategoria);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(departamento);
+            return View(subCategoria);
         }
 
-        // GET: Departamento/Edit/5
+        // GET: SubCategorias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ventasweb.Controllers
                 return NotFound();
             }
 
-            var departamento = await _context.Departamento.FindAsync(id);
-            if (departamento == null)
+            var subCategoria = await _context.SubCategorias.FindAsync(id);
+            if (subCategoria == null)
             {
                 return NotFound();
             }
-            return View(departamento);
+            return View(subCategoria);
         }
 
-        // POST: Departamento/Edit/5
+        // POST: SubCategorias/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("departamentoId,nombreDepartamento")] Departamento departamento)
+        public async Task<IActionResult> Edit(int id, [Bind("subcategoriaId,nombreSubCategoria,departamentoId")] SubCategoria subCategoria)
         {
-            if (id != departamento.departamentoId)
+            if (id != subCategoria.subcategoriaId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ventasweb.Controllers
             {
                 try
                 {
-                    _context.Update(departamento);
+                    _context.Update(subCategoria);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DepartamentoExists(departamento.departamentoId))
+                    if (!SubCategoriaExists(subCategoria.subcategoriaId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ventasweb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(departamento);
+            return View(subCategoria);
         }
 
-        // GET: Departamento/Delete/5
+        // GET: SubCategorias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ventasweb.Controllers
                 return NotFound();
             }
 
-            var departamento = await _context.Departamento
-                .FirstOrDefaultAsync(m => m.departamentoId == id);
-            if (departamento == null)
+            var subCategoria = await _context.SubCategorias
+                .FirstOrDefaultAsync(m => m.subcategoriaId == id);
+            if (subCategoria == null)
             {
                 return NotFound();
             }
 
-            return View(departamento);
+            return View(subCategoria);
         }
 
-        // POST: Departamento/Delete/5
+        // POST: SubCategorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var departamento = await _context.Departamento.FindAsync(id);
-            _context.Departamento.Remove(departamento);
+            var subCategoria = await _context.SubCategorias.FindAsync(id);
+            _context.SubCategorias.Remove(subCategoria);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DepartamentoExists(int id)
+        private bool SubCategoriaExists(int id)
         {
-            return _context.Departamento.Any(e => e.departamentoId == id);
+            return _context.SubCategorias.Any(e => e.subcategoriaId == id);
         }
     }
 }

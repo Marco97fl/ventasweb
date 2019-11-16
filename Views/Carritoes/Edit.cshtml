@@ -24,6 +24,26 @@
                 <span asp-validation-for="lugarEntrega" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="metodoPago" class="control-label"></label>
+                <input asp-for="metodoPago" class="form-control" />
+                <span asp-validation-for="metodoPago" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="total" class="control-label"></label>
+                <input asp-for="total" class="form-control" />
+                <span asp-validation-for="total" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idUsuario" class="control-label"></label>
+                <input asp-for="idUsuario" class="form-control" />
+                <span asp-validation-for="idUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idTarifa" class="control-label"></label>
+                <input asp-for="idTarifa" class="form-control" />
+                <span asp-validation-for="idTarifa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
