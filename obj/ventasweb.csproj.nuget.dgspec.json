@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\too\\clone\\ventasweb\\ventasweb.csproj": {}
+    "C:\\Users\\usuario\\Desktop\\ventasweb\\ventasweb.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\too\\clone\\ventasweb\\ventasweb.csproj": {
+    "C:\\Users\\usuario\\Desktop\\ventasweb\\ventasweb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\too\\clone\\ventasweb\\ventasweb.csproj",
+        "projectUniqueName": "C:\\Users\\usuario\\Desktop\\ventasweb\\ventasweb.csproj",
         "projectName": "ventasweb",
-        "projectPath": "C:\\Users\\User\\too\\clone\\ventasweb\\ventasweb.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\too\\clone\\ventasweb\\obj\\",
+        "projectPath": "C:\\Users\\usuario\\Desktop\\ventasweb\\ventasweb.csproj",
+        "packagesPath": "C:\\Users\\usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\usuario\\Desktop\\ventasweb\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
