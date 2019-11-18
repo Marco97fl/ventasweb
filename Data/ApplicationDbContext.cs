@@ -30,8 +30,8 @@ namespace ventasweb.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<DetalleCarrito>().HasKey(o => new { o.carritoId, o.productoId });
-            modelBuilder.Entity<tag_prod>().HasKey(o => new { o.productoId, o.tagId });
+            modelBuilder.Entity<DetalleCarrito>().HasKey(o => new { o.CarritoId, o.ProductoId });
+            modelBuilder.Entity<tag_prod>().HasKey(o => new { o.ProductoId, o.tagId });
         }
     }
 }

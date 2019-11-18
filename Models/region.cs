@@ -11,11 +11,12 @@ namespace ventasweb.Models
     {
         [Required]
         [Key]
-        public int idRegion { get; set; }
+        public int regionId { get; set; }
         [Required]
         public string nombreRegion { get; set; }
         [Required]
         [ForeignKey("tarifaEnvio")]
-        public int idTarifa { get; set; }
+        public int tarifaEnvioId { get; set; }
+        public tarifaEnvio tarifaEnvio { get; set; }
     }
 }

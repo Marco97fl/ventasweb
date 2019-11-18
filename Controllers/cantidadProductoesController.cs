@@ -22,7 +22,8 @@ namespace ventasweb.Controllers
         // GET: cantidadProductoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.cantidadProductos.ToListAsync());
+            var applicationDbContext = _context.cantidadProductos.Include(c => c.Producto);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: cantidadProductoes/Details/5
@@ -34,7 +35,8 @@ namespace ventasweb.Controllers
             }
 
             var cantidadProducto = await _context.cantidadProductos
-                .FirstOrDefaultAsync(m => m.idCantidadProd == id);
+                .Include(c => c.Producto)
+                .FirstOrDefaultAsync(m => m.cantidadProductoId == id);
             if (cantidadProducto == null)
             {
                 return NotFound();
@@ -46,6 +48,7 @@ namespace ventasweb.Controllers
         // GET: cantidadProductoes/Create
         public IActionResult Create()
         {
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("idCantidadProd,stockProd,productoId")] cantidadProducto cantidadProducto)
+        public async Task<IActionResult> Create([Bind("cantidadProductoId,stockProd,ProductoId")] cantidadProducto cantidadProducto)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace ventasweb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd", cantidadProducto.ProductoId);
             return View(cantidadProducto);
         }
 
@@ -78,6 +82,7 @@ namespace ventasweb.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd", cantidadProducto.ProductoId);
             return View(cantidadProducto);
         }
 
@@ -86,9 +91,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("idCantidadProd,stockProd,productoId")] cantidadProducto cantidadProducto)
+        public async Task<IActionResult> Edit(int id, [Bind("cantidadProductoId,stockProd,ProductoId")] cantidadProducto cantidadProducto)
         {
-            if (id != cantidadProducto.idCantidadProd)
+            if (id != cantidadProducto.cantidadProductoId)
             {
                 return NotFound();
             }
@@ -102,7 +107,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!cantidadProductoExists(cantidadProducto.idCantidadProd))
+                    if (!cantidadProductoExists(cantidadProducto.cantidadProductoId))
                     {
                         return NotFound();
                     }
@@ -113,6 +118,7 @@ namespace ventasweb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd", cantidadProducto.ProductoId);
             return View(cantidadProducto);
         }
 
@@ -125,7 +131,8 @@ namespace ventasweb.Controllers
             }
 
             var cantidadProducto = await _context.cantidadProductos
-                .FirstOrDefaultAsync(m => m.idCantidadProd == id);
+                .Include(c => c.Producto)
+                .FirstOrDefaultAsync(m => m.cantidadProductoId == id);
             if (cantidadProducto == null)
             {
                 return NotFound();
@@ -147,7 +154,7 @@ namespace ventasweb.Controllers
 
         private bool cantidadProductoExists(int id)
         {
-            return _context.cantidadProductos.Any(e => e.idCantidadProd == id);
+            return _context.cantidadProductos.Any(e => e.cantidadProductoId == id);
         }
     }
 }

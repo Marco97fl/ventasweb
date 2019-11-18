@@ -11,7 +11,7 @@ namespace ventasweb.Models
     {
         [Required]
         [Key]
-        public int departamentoId { get; set; }
+        public int DepartamentoId { get; set; }
         [Required]
         public string nombreDepartamento { get; set; }
         public List<SubCategoria> subcategorias { get; set; }

@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.nombreRegion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.idTarifa)
+                @Html.DisplayNameFor(model => model.tarifaEnvio)
             </th>
             <th></th>
         </tr>
@@ -28,12 +28,12 @@
                 @Html.DisplayFor(modelItem => item.nombreRegion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.idTarifa)
+                @Html.DisplayFor(modelItem => item.tarifaEnvio.tarifaEnvioId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.idRegion">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.idRegion">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.idRegion">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.regionId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.regionId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.regionId">Delete</a>
             </td>
         </tr>
 }

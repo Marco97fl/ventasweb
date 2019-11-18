@@ -11,7 +11,7 @@ namespace ventasweb.Models
     {
         [Required]
         [Key]
-        public int idUsuario { get; set; }
+        public int usuarioId { get; set; }
         [Required]
         public string username { get; set; }
         [Required]

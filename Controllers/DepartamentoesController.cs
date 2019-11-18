@@ -34,7 +34,7 @@ namespace ventasweb.Controllers
             }
 
             var departamento = await _context.Departamentos
-                .FirstOrDefaultAsync(m => m.departamentoId == id);
+                .FirstOrDefaultAsync(m => m.DepartamentoId == id);
             if (departamento == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("departamentoId,nombreDepartamento")] Departamento departamento)
+        public async Task<IActionResult> Create([Bind("DepartamentoId,nombreDepartamento")] Departamento departamento)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("departamentoId,nombreDepartamento")] Departamento departamento)
+        public async Task<IActionResult> Edit(int id, [Bind("DepartamentoId,nombreDepartamento")] Departamento departamento)
         {
-            if (id != departamento.departamentoId)
+            if (id != departamento.DepartamentoId)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DepartamentoExists(departamento.departamentoId))
+                    if (!DepartamentoExists(departamento.DepartamentoId))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace ventasweb.Controllers
             }
 
             var departamento = await _context.Departamentos
-                .FirstOrDefaultAsync(m => m.departamentoId == id);
+                .FirstOrDefaultAsync(m => m.DepartamentoId == id);
             if (departamento == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace ventasweb.Controllers
 
         private bool DepartamentoExists(int id)
         {
-            return _context.Departamentos.Any(e => e.departamentoId == id);
+            return _context.Departamentos.Any(e => e.DepartamentoId == id);
         }
     }
 }

@@ -11,9 +11,11 @@ namespace ventasweb.Models
     {
         [Required]
         [ForeignKey("Producto")]
-        public int productoId { get; set; }
+        public int ProductoId { get; set; }
+        public Producto Producto { get; set; }
         [Required]
         [ForeignKey("tag")]
         public int tagId { get; set; }
+        public tag tag { get; set; }
     }
 }

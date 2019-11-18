@@ -12,7 +12,7 @@ namespace ventasweb.Models
     {
         [Required]
         [Key]
-        public int idTarifa { get; set; }
+        public int tarifaEnvioId { get; set; }
         [Required]
         public double valorTarifa { get; set; }
         public List<region> regiones { get; set; }

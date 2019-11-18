@@ -22,7 +22,8 @@ namespace ventasweb.Controllers
         // GET: SubCategorias
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SubCategorias.ToListAsync());
+            var applicationDbContext = _context.SubCategorias.Include(s => s.Departamento);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: SubCategorias/Details/5
@@ -34,7 +35,8 @@ namespace ventasweb.Controllers
             }
 
             var subCategoria = await _context.SubCategorias
-                .FirstOrDefaultAsync(m => m.subcategoriaId == id);
+                .Include(s => s.Departamento)
+                .FirstOrDefaultAsync(m => m.SubCategoriaId == id);
             if (subCategoria == null)
             {
                 return NotFound();
@@ -46,6 +48,7 @@ namespace ventasweb.Controllers
         // GET: SubCategorias/Create
         public IActionResult Create()
         {
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "nombreDepartamento");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("subcategoriaId,nombreSubCategoria,departamentoId")] SubCategoria subCategoria)
+        public async Task<IActionResult> Create([Bind("SubCategoriaId,nombreSubCategoria,DepartamentoId")] SubCategoria subCategoria)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace ventasweb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "nombreDepartamento", subCategoria.DepartamentoId);
             return View(subCategoria);
         }
 
@@ -78,6 +82,7 @@ namespace ventasweb.Controllers
             {
                 return NotFound();
             }
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "nombreDepartamento", subCategoria.DepartamentoId);
             return View(subCategoria);
         }
 
@@ -86,9 +91,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("subcategoriaId,nombreSubCategoria,departamentoId")] SubCategoria subCategoria)
+        public async Task<IActionResult> Edit(int id, [Bind("SubCategoriaId,nombreSubCategoria,DepartamentoId")] SubCategoria subCategoria)
         {
-            if (id != subCategoria.subcategoriaId)
+            if (id != subCategoria.SubCategoriaId)
             {
                 return NotFound();
             }
@@ -102,7 +107,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SubCategoriaExists(subCategoria.subcategoriaId))
+                    if (!SubCategoriaExists(subCategoria.SubCategoriaId))
                     {
                         return NotFound();
                     }
@@ -113,6 +118,7 @@ namespace ventasweb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "nombreDepartamento", subCategoria.DepartamentoId);
             return View(subCategoria);
         }
 
@@ -125,7 +131,8 @@ namespace ventasweb.Controllers
             }
 
             var subCategoria = await _context.SubCategorias
-                .FirstOrDefaultAsync(m => m.subcategoriaId == id);
+                .Include(s => s.Departamento)
+                .FirstOrDefaultAsync(m => m.SubCategoriaId == id);
             if (subCategoria == null)
             {
                 return NotFound();
@@ -147,7 +154,7 @@ namespace ventasweb.Controllers
 
         private bool SubCategoriaExists(int id)
         {
-            return _context.SubCategorias.Any(e => e.subcategoriaId == id);
+            return _context.SubCategorias.Any(e => e.SubCategoriaId == id);
         }
     }
 }

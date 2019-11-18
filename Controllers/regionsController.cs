@@ -22,7 +22,8 @@ namespace ventasweb.Controllers
         // GET: regions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.regiones.ToListAsync());
+            var applicationDbContext = _context.regiones.Include(r => r.tarifaEnvio);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: regions/Details/5
@@ -34,7 +35,8 @@ namespace ventasweb.Controllers
             }
 
             var region = await _context.regiones
-                .FirstOrDefaultAsync(m => m.idRegion == id);
+                .Include(r => r.tarifaEnvio)
+                .FirstOrDefaultAsync(m => m.regionId == id);
             if (region == null)
             {
                 return NotFound();
@@ -46,6 +48,7 @@ namespace ventasweb.Controllers
         // GET: regions/Create
         public IActionResult Create()
         {
+            ViewData["tarifaEnvioId"] = new SelectList(_context.tarifaEnvios, "tarifaEnvioId", "tarifaEnvioId");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("idRegion,nombreRegion,idTarifa")] region region)
+        public async Task<IActionResult> Create([Bind("regionId,nombreRegion,tarifaEnvioId")] region region)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace ventasweb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["tarifaEnvioId"] = new SelectList(_context.tarifaEnvios, "tarifaEnvioId", "tarifaEnvioId", region.tarifaEnvioId);
             return View(region);
         }
 
@@ -78,6 +82,7 @@ namespace ventasweb.Controllers
             {
                 return NotFound();
             }
+            ViewData["tarifaEnvioId"] = new SelectList(_context.tarifaEnvios, "tarifaEnvioId", "tarifaEnvioId", region.tarifaEnvioId);
             return View(region);
         }
 
@@ -86,9 +91,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("idRegion,nombreRegion,idTarifa")] region region)
+        public async Task<IActionResult> Edit(int id, [Bind("regionId,nombreRegion,tarifaEnvioId")] region region)
         {
-            if (id != region.idRegion)
+            if (id != region.regionId)
             {
                 return NotFound();
             }
@@ -102,7 +107,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!regionExists(region.idRegion))
+                    if (!regionExists(region.regionId))
                     {
                         return NotFound();
                     }
@@ -113,6 +118,7 @@ namespace ventasweb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["tarifaEnvioId"] = new SelectList(_context.tarifaEnvios, "tarifaEnvioId", "tarifaEnvioId", region.tarifaEnvioId);
             return View(region);
         }
 
@@ -125,7 +131,8 @@ namespace ventasweb.Controllers
             }
 
             var region = await _context.regiones
-                .FirstOrDefaultAsync(m => m.idRegion == id);
+                .Include(r => r.tarifaEnvio)
+                .FirstOrDefaultAsync(m => m.regionId == id);
             if (region == null)
             {
                 return NotFound();
@@ -147,7 +154,7 @@ namespace ventasweb.Controllers
 
         private bool regionExists(int id)
         {
-            return _context.regiones.Any(e => e.idRegion == id);
+            return _context.regiones.Any(e => e.regionId == id);
         }
     }
 }

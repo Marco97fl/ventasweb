@@ -221,63 +221,80 @@ namespace ventasweb.Data.Migrations
 
             modelBuilder.Entity("ventasweb.Models.Carrito", b =>
                 {
-                    b.Property<int>("carritoId")
+                    b.Property<int>("CarritoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("lugarEntrega")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("metodoPago")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("subTotal")
                         .HasColumnType("float");
 
-                    b.HasKey("carritoId");
+                    b.Property<int>("tarifaEnvioId")
+                        .HasColumnType("int");
 
-                    b.ToTable("Carrito");
+                    b.Property<double>("total")
+                        .HasColumnType("float");
+
+                    b.Property<int>("usuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CarritoId");
+
+                    b.HasIndex("tarifaEnvioId");
+
+                    b.HasIndex("usuarioId");
+
+                    b.ToTable("Carritos");
                 });
 
             modelBuilder.Entity("ventasweb.Models.Departamento", b =>
                 {
-                    b.Property<int>("departamentoId")
+                    b.Property<int>("DepartamentoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("nombreDepartamento")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("departamentoId");
+                    b.HasKey("DepartamentoId");
 
-                    b.ToTable("Departamento");
+                    b.ToTable("Departamentos");
                 });
 
             modelBuilder.Entity("ventasweb.Models.DetalleCarrito", b =>
                 {
-                    b.Property<int>("detalleCarritoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("cantidad")
+                    b.Property<int>("CarritoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("carritoId")
+                    b.Property<int>("ProductoId")
                         .HasColumnType("int");
 
-                    b.Property<double>("precio")
+                    b.Property<int>("cantidadProd")
+                        .HasColumnType("int");
+
+                    b.Property<double>("precioLinea")
                         .HasColumnType("float");
 
-                    b.HasKey("detalleCarritoId");
+                    b.HasKey("CarritoId", "ProductoId");
 
-                    b.HasIndex("carritoId");
+                    b.HasIndex("ProductoId");
 
-                    b.ToTable("DetalleCarrito");
+                    b.ToTable("DetalleCarritos");
                 });
 
             modelBuilder.Entity("ventasweb.Models.Producto", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -285,44 +302,208 @@ namespace ventasweb.Data.Migrations
                     b.Property<int>("SubCategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<float>("descuento")
-                        .HasColumnType("real");
+                    b.Property<string>("descripcionProd")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("enVenta")
                         .HasColumnType("bit");
 
                     b.Property<string>("fabricante")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombreProducto")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("precio")
+                    b.Property<double>("peso")
+                        .HasColumnType("float");
+
+                    b.Property<float>("precioProd")
                         .HasColumnType("real");
 
-                    b.HasKey("Id");
+                    b.Property<string>("proveedor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("volumen")
+                        .HasColumnType("float");
+
+                    b.HasKey("ProductoId");
+
+                    b.HasIndex("SubCategoriaId");
 
                     b.ToTable("productos");
                 });
 
             modelBuilder.Entity("ventasweb.Models.SubCategoria", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SubCategoriaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("departamentoId")
+                    b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
 
                     b.Property<string>("nombreSubCategoria")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SubCategoriaId");
 
-                    b.HasIndex("departamentoId");
+                    b.HasIndex("DepartamentoId");
 
-                    b.ToTable("SubCategoria");
+                    b.ToTable("SubCategorias");
+                });
+
+            modelBuilder.Entity("ventasweb.Models.cantidadProducto", b =>
+                {
+                    b.Property<int>("cantidadProductoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("stockProd")
+                        .HasColumnType("int");
+
+                    b.HasKey("cantidadProductoId");
+
+                    b.HasIndex("ProductoId")
+                        .IsUnique();
+
+                    b.ToTable("cantidadProductos");
+                });
+
+            modelBuilder.Entity("ventasweb.Models.impuesto", b =>
+                {
+                    b.Property<int>("impuestoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SubCategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("nomImpuesto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("valorImpuesto")
+                        .HasColumnType("float");
+
+                    b.HasKey("impuestoId");
+
+                    b.HasIndex("SubCategoriaId");
+
+                    b.ToTable("impuestos");
+                });
+
+            modelBuilder.Entity("ventasweb.Models.region", b =>
+                {
+                    b.Property<int>("regionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("nombreRegion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("tarifaEnvioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("regionId");
+
+                    b.HasIndex("tarifaEnvioId");
+
+                    b.ToTable("regiones");
+                });
+
+            modelBuilder.Entity("ventasweb.Models.tag", b =>
+                {
+                    b.Property<int>("tagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("nomTag")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("tagId");
+
+                    b.ToTable("tags");
+                });
+
+            modelBuilder.Entity("ventasweb.Models.tag_prod", b =>
+                {
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("tagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductoId", "tagId");
+
+                    b.HasIndex("tagId");
+
+                    b.ToTable("tag_prods");
+                });
+
+            modelBuilder.Entity("ventasweb.Models.tarifaEnvio", b =>
+                {
+                    b.Property<int>("tarifaEnvioId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("valorTarifa")
+                        .HasColumnType("float");
+
+                    b.HasKey("tarifaEnvioId");
+
+                    b.ToTable("tarifaEnvios");
+                });
+
+            modelBuilder.Entity("ventasweb.Models.usuario", b =>
+                {
+                    b.Property<int>("usuarioId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("pais")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("primerApell")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("primerNomb")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("telefono")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("usuarioId");
+
+                    b.ToTable("usuarios");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -376,18 +557,94 @@ namespace ventasweb.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ventasweb.Models.Carrito", b =>
+                {
+                    b.HasOne("ventasweb.Models.tarifaEnvio", "tarifaEnvio")
+                        .WithMany("carritos")
+                        .HasForeignKey("tarifaEnvioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ventasweb.Models.usuario", "usuario")
+                        .WithMany("carritos")
+                        .HasForeignKey("usuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ventasweb.Models.DetalleCarrito", b =>
                 {
-                    b.HasOne("ventasweb.Models.Carrito", null)
+                    b.HasOne("ventasweb.Models.Carrito", "Carrito")
                         .WithMany("detalleCarritoId")
-                        .HasForeignKey("carritoId");
+                        .HasForeignKey("CarritoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ventasweb.Models.Producto", "Producto")
+                        .WithMany("detallesCarrito")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ventasweb.Models.Producto", b =>
+                {
+                    b.HasOne("ventasweb.Models.SubCategoria", "SubCategoria")
+                        .WithMany("productos")
+                        .HasForeignKey("SubCategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ventasweb.Models.SubCategoria", b =>
                 {
-                    b.HasOne("ventasweb.Models.Departamento", null)
+                    b.HasOne("ventasweb.Models.Departamento", "Departamento")
                         .WithMany("subcategorias")
-                        .HasForeignKey("departamentoId");
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ventasweb.Models.cantidadProducto", b =>
+                {
+                    b.HasOne("ventasweb.Models.Producto", "Producto")
+                        .WithOne("cantProducto")
+                        .HasForeignKey("ventasweb.Models.cantidadProducto", "ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ventasweb.Models.impuesto", b =>
+                {
+                    b.HasOne("ventasweb.Models.SubCategoria", "SubCategoria")
+                        .WithMany("impuestos")
+                        .HasForeignKey("SubCategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ventasweb.Models.region", b =>
+                {
+                    b.HasOne("ventasweb.Models.tarifaEnvio", "tarifaEnvio")
+                        .WithMany("regiones")
+                        .HasForeignKey("tarifaEnvioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ventasweb.Models.tag_prod", b =>
+                {
+                    b.HasOne("ventasweb.Models.Producto", "Producto")
+                        .WithMany("tag_prods")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ventasweb.Models.tag", "tag")
+                        .WithMany("tags_prods")
+                        .HasForeignKey("tagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

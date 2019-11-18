@@ -22,7 +22,8 @@ namespace ventasweb.Controllers
         // GET: impuestoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.impuestos.ToListAsync());
+            var applicationDbContext = _context.impuestos.Include(i => i.SubCategoria);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: impuestoes/Details/5
@@ -34,7 +35,8 @@ namespace ventasweb.Controllers
             }
 
             var impuesto = await _context.impuestos
-                .FirstOrDefaultAsync(m => m.idImpuesto == id);
+                .Include(i => i.SubCategoria)
+                .FirstOrDefaultAsync(m => m.impuestoId == id);
             if (impuesto == null)
             {
                 return NotFound();
@@ -46,6 +48,7 @@ namespace ventasweb.Controllers
         // GET: impuestoes/Create
         public IActionResult Create()
         {
+            ViewData["SubCategoriaId"] = new SelectList(_context.SubCategorias, "SubCategoriaId", "nombreSubCategoria");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("idImpuesto,nomImpuesto,valorImpuesto,subcategoriaId")] impuesto impuesto)
+        public async Task<IActionResult> Create([Bind("impuestoId,nomImpuesto,valorImpuesto,SubCategoriaId")] impuesto impuesto)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace ventasweb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["SubCategoriaId"] = new SelectList(_context.SubCategorias, "SubCategoriaId", "nombreSubCategoria", impuesto.SubCategoriaId);
             return View(impuesto);
         }
 
@@ -78,6 +82,7 @@ namespace ventasweb.Controllers
             {
                 return NotFound();
             }
+            ViewData["SubCategoriaId"] = new SelectList(_context.SubCategorias, "SubCategoriaId", "nombreSubCategoria", impuesto.SubCategoriaId);
             return View(impuesto);
         }
 
@@ -86,9 +91,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("idImpuesto,nomImpuesto,valorImpuesto,subcategoriaId")] impuesto impuesto)
+        public async Task<IActionResult> Edit(int id, [Bind("impuestoId,nomImpuesto,valorImpuesto,SubCategoriaId")] impuesto impuesto)
         {
-            if (id != impuesto.idImpuesto)
+            if (id != impuesto.impuestoId)
             {
                 return NotFound();
             }
@@ -102,7 +107,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!impuestoExists(impuesto.idImpuesto))
+                    if (!impuestoExists(impuesto.impuestoId))
                     {
                         return NotFound();
                     }
@@ -113,6 +118,7 @@ namespace ventasweb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["SubCategoriaId"] = new SelectList(_context.SubCategorias, "SubCategoriaId", "nombreSubCategoria", impuesto.SubCategoriaId);
             return View(impuesto);
         }
 
@@ -125,7 +131,8 @@ namespace ventasweb.Controllers
             }
 
             var impuesto = await _context.impuestos
-                .FirstOrDefaultAsync(m => m.idImpuesto == id);
+                .Include(i => i.SubCategoria)
+                .FirstOrDefaultAsync(m => m.impuestoId == id);
             if (impuesto == null)
             {
                 return NotFound();
@@ -147,7 +154,7 @@ namespace ventasweb.Controllers
 
         private bool impuestoExists(int id)
         {
-            return _context.impuestos.Any(e => e.idImpuesto == id);
+            return _context.impuestos.Any(e => e.impuestoId == id);
         }
     }
 }

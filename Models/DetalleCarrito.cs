@@ -11,10 +11,12 @@ namespace ventasweb.Models
     {
         [Required]
         [ForeignKey("Carrito")]
-        public int carritoId { get; set; }
+        public int CarritoId { get; set; }
+        public Carrito Carrito { get; set; }
         [Required]
         [ForeignKey("Producto")]
-        public int productoId { get; set; }
+        public int ProductoId { get; set; }
+        public Producto Producto { get; set; }
         [Required]
         public int cantidadProd { get; set; }
         [Required]

@@ -22,7 +22,8 @@ namespace ventasweb.Controllers
         // GET: tag_prod
         public async Task<IActionResult> Index()
         {
-            return View(await _context.tag_prods.ToListAsync());
+            var applicationDbContext = _context.tag_prods.Include(t => t.Producto).Include(t => t.tag);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: tag_prod/Details/5
@@ -34,7 +35,9 @@ namespace ventasweb.Controllers
             }
 
             var tag_prod = await _context.tag_prods
-                .FirstOrDefaultAsync(m => m.productoId == id);
+                .Include(t => t.Producto)
+                .Include(t => t.tag)
+                .FirstOrDefaultAsync(m => m.ProductoId == id);
             if (tag_prod == null)
             {
                 return NotFound();
@@ -46,6 +49,8 @@ namespace ventasweb.Controllers
         // GET: tag_prod/Create
         public IActionResult Create()
         {
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd");
+            ViewData["tagId"] = new SelectList(_context.tags, "tagId", "nomTag");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("productoId,tagId")] tag_prod tag_prod)
+        public async Task<IActionResult> Create([Bind("ProductoId,tagId")] tag_prod tag_prod)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace ventasweb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd", tag_prod.ProductoId);
+            ViewData["tagId"] = new SelectList(_context.tags, "tagId", "nomTag", tag_prod.tagId);
             return View(tag_prod);
         }
 
@@ -78,6 +85,8 @@ namespace ventasweb.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd", tag_prod.ProductoId);
+            ViewData["tagId"] = new SelectList(_context.tags, "tagId", "nomTag", tag_prod.tagId);
             return View(tag_prod);
         }
 
@@ -86,9 +95,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("productoId,tagId")] tag_prod tag_prod)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,tagId")] tag_prod tag_prod)
         {
-            if (id != tag_prod.productoId)
+            if (id != tag_prod.ProductoId)
             {
                 return NotFound();
             }
@@ -102,7 +111,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!tag_prodExists(tag_prod.productoId))
+                    if (!tag_prodExists(tag_prod.ProductoId))
                     {
                         return NotFound();
                     }
@@ -113,6 +122,8 @@ namespace ventasweb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd", tag_prod.ProductoId);
+            ViewData["tagId"] = new SelectList(_context.tags, "tagId", "nomTag", tag_prod.tagId);
             return View(tag_prod);
         }
 
@@ -125,7 +136,9 @@ namespace ventasweb.Controllers
             }
 
             var tag_prod = await _context.tag_prods
-                .FirstOrDefaultAsync(m => m.productoId == id);
+                .Include(t => t.Producto)
+                .Include(t => t.tag)
+                .FirstOrDefaultAsync(m => m.ProductoId == id);
             if (tag_prod == null)
             {
                 return NotFound();
@@ -147,7 +160,7 @@ namespace ventasweb.Controllers
 
         private bool tag_prodExists(int id)
         {
-            return _context.tag_prods.Any(e => e.productoId == id);
+            return _context.tag_prods.Any(e => e.ProductoId == id);
         }
     }
 }

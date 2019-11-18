@@ -13,6 +13,12 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Carrito)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Producto)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.cantidadProd)
             </th>
             <th>
@@ -24,6 +30,12 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Carrito.lugarEntrega)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.descripcionProd)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.cantidadProd)
             </td>

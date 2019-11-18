@@ -11,12 +11,13 @@ namespace ventasweb.Models
     {
         [Required]
         [Key]
-        public int subcategoriaId { get; set; }
+        public int SubCategoriaId { get; set; }
         [Required]
         public string nombreSubCategoria { get; set; }
         [Required]
         [ForeignKey("Departamento")]
-        public int departamentoId { get; set; }
+        public int DepartamentoId { get; set; }
+        public Departamento Departamento { get; set; }
         public List<impuesto> impuestos { get; set; }
         public List<Producto> productos { get; set; }
 

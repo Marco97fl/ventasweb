@@ -34,7 +34,7 @@ namespace ventasweb.Controllers
             }
 
             var usuario = await _context.usuarios
-                .FirstOrDefaultAsync(m => m.idUsuario == id);
+                .FirstOrDefaultAsync(m => m.usuarioId == id);
             if (usuario == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("idUsuario,username,primerNomb,primerApell,direccion,telefono,pais")] usuario usuario)
+        public async Task<IActionResult> Create([Bind("usuarioId,username,primerNomb,primerApell,direccion,telefono,pais")] usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("idUsuario,username,primerNomb,primerApell,direccion,telefono,pais")] usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("usuarioId,username,primerNomb,primerApell,direccion,telefono,pais")] usuario usuario)
         {
-            if (id != usuario.idUsuario)
+            if (id != usuario.usuarioId)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!usuarioExists(usuario.idUsuario))
+                    if (!usuarioExists(usuario.usuarioId))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace ventasweb.Controllers
             }
 
             var usuario = await _context.usuarios
-                .FirstOrDefaultAsync(m => m.idUsuario == id);
+                .FirstOrDefaultAsync(m => m.usuarioId == id);
             if (usuario == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace ventasweb.Controllers
 
         private bool usuarioExists(int id)
         {
-            return _context.usuarios.Any(e => e.idUsuario == id);
+            return _context.usuarios.Any(e => e.usuarioId == id);
         }
     }
 }

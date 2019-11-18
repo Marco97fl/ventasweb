@@ -12,16 +12,16 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="idCantidadProd" />
+            <input type="hidden" asp-for="cantidadProductoId" />
             <div class="form-group">
                 <label asp-for="stockProd" class="control-label"></label>
                 <input asp-for="stockProd" class="form-control" />
                 <span asp-validation-for="stockProd" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="productoId" class="control-label"></label>
-                <select asp-for="productoId" class="form-control" asp-items="ViewBag.productoId"></select>
-                <span asp-validation-for="productoId" class="text-danger"></span>
+                <label asp-for="ProductoId" class="control-label"></label>
+                <select asp-for="ProductoId" class="form-control" asp-items="ViewBag.ProductoId"></select>
+                <span asp-validation-for="ProductoId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

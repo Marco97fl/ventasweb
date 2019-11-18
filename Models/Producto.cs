@@ -11,7 +11,7 @@ namespace ventasweb.Models
     {
         [Required]
         [Key]
-        public int productoId { get; set; }
+        public int ProductoId { get; set; }
         [Required]
         public string nombreProducto { get; set; }
         [Required]
@@ -29,7 +29,8 @@ namespace ventasweb.Models
         public string descripcionProd { get; set; }
         [Required]
         [ForeignKey("SubCategoria")]
-        public int subcategoriaId { get; set; }
+        public int SubCategoriaId { get; set; }
+        public SubCategoria SubCategoria { get; set; }
         public List<DetalleCarrito> detallesCarrito { get; set; }
         public List<tag_prod> tag_prods { get; set; }
         public cantidadProducto cantProducto { get; set; }

@@ -12,7 +12,7 @@ namespace ventasweb.Models
     {
         [Required]
         [Key]
-        public int carritoId { get; set; }
+        public int CarritoId { get; set; }
         [Required]
         public double subTotal { get; set; }
         [Required]
@@ -23,10 +23,12 @@ namespace ventasweb.Models
         public double total { get; set; }
         [Required]
         [ForeignKey("usuario")]
-        public int idUsuario { get; set; }
+        public int usuarioId { get; set; }
+        public usuario usuario { get; set; }
         [Required]
         [ForeignKey("tarifaEnvio")]
-        public int idTarifa { get; set; }
+        public int tarifaEnvioId { get; set; }
+        public tarifaEnvio tarifaEnvio { get; set; }
         public List<DetalleCarrito> detalleCarritoId { get; set; }
 
     }

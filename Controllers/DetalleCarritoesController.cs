@@ -22,7 +22,8 @@ namespace ventasweb.Controllers
         // GET: DetalleCarritoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DetalleCarritos.ToListAsync());
+            var applicationDbContext = _context.DetalleCarritos.Include(d => d.Carrito).Include(d => d.Producto);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: DetalleCarritoes/Details/5
@@ -34,7 +35,9 @@ namespace ventasweb.Controllers
             }
 
             var detalleCarrito = await _context.DetalleCarritos
-                .FirstOrDefaultAsync(m => m.carritoId == id);
+                .Include(d => d.Carrito)
+                .Include(d => d.Producto)
+                .FirstOrDefaultAsync(m => m.CarritoId == id);
             if (detalleCarrito == null)
             {
                 return NotFound();
@@ -46,6 +49,8 @@ namespace ventasweb.Controllers
         // GET: DetalleCarritoes/Create
         public IActionResult Create()
         {
+            ViewData["CarritoId"] = new SelectList(_context.Carritos, "CarritoId", "lugarEntrega");
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("carritoId,productoId,cantidadProd,precioLinea")] DetalleCarrito detalleCarrito)
+        public async Task<IActionResult> Create([Bind("CarritoId,ProductoId,cantidadProd,precioLinea")] DetalleCarrito detalleCarrito)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace ventasweb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CarritoId"] = new SelectList(_context.Carritos, "CarritoId", "lugarEntrega", detalleCarrito.CarritoId);
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd", detalleCarrito.ProductoId);
             return View(detalleCarrito);
         }
 
@@ -78,6 +85,8 @@ namespace ventasweb.Controllers
             {
                 return NotFound();
             }
+            ViewData["CarritoId"] = new SelectList(_context.Carritos, "CarritoId", "lugarEntrega", detalleCarrito.CarritoId);
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd", detalleCarrito.ProductoId);
             return View(detalleCarrito);
         }
 
@@ -86,9 +95,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("carritoId,productoId,cantidadProd,precioLinea")] DetalleCarrito detalleCarrito)
+        public async Task<IActionResult> Edit(int id, [Bind("CarritoId,ProductoId,cantidadProd,precioLinea")] DetalleCarrito detalleCarrito)
         {
-            if (id != detalleCarrito.carritoId)
+            if (id != detalleCarrito.CarritoId)
             {
                 return NotFound();
             }
@@ -102,7 +111,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DetalleCarritoExists(detalleCarrito.carritoId))
+                    if (!DetalleCarritoExists(detalleCarrito.CarritoId))
                     {
                         return NotFound();
                     }
@@ -113,6 +122,8 @@ namespace ventasweb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CarritoId"] = new SelectList(_context.Carritos, "CarritoId", "lugarEntrega", detalleCarrito.CarritoId);
+            ViewData["ProductoId"] = new SelectList(_context.productos, "ProductoId", "descripcionProd", detalleCarrito.ProductoId);
             return View(detalleCarrito);
         }
 
@@ -125,7 +136,9 @@ namespace ventasweb.Controllers
             }
 
             var detalleCarrito = await _context.DetalleCarritos
-                .FirstOrDefaultAsync(m => m.carritoId == id);
+                .Include(d => d.Carrito)
+                .Include(d => d.Producto)
+                .FirstOrDefaultAsync(m => m.CarritoId == id);
             if (detalleCarrito == null)
             {
                 return NotFound();
@@ -147,7 +160,7 @@ namespace ventasweb.Controllers
 
         private bool DetalleCarritoExists(int id)
         {
-            return _context.DetalleCarritos.Any(e => e.carritoId == id);
+            return _context.DetalleCarritos.Any(e => e.CarritoId == id);
         }
     }
 }

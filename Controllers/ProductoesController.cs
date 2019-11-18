@@ -22,7 +22,8 @@ namespace ventasweb.Controllers
         // GET: Productoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.productos.ToListAsync());
+            var applicationDbContext = _context.productos.Include(p => p.SubCategoria);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Productoes/Details/5
@@ -34,7 +35,8 @@ namespace ventasweb.Controllers
             }
 
             var producto = await _context.productos
-                .FirstOrDefaultAsync(m => m.productoId == id);
+                .Include(p => p.SubCategoria)
+                .FirstOrDefaultAsync(m => m.ProductoId == id);
             if (producto == null)
             {
                 return NotFound();
@@ -46,6 +48,7 @@ namespace ventasweb.Controllers
         // GET: Productoes/Create
         public IActionResult Create()
         {
+            ViewData["SubCategoriaId"] = new SelectList(_context.SubCategorias, "SubCategoriaId", "nombreSubCategoria");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("productoId,nombreProducto,fabricante,proveedor,peso,volumen,precioProd,enVenta,descripcionProd,subcategoriaId")] Producto producto)
+        public async Task<IActionResult> Create([Bind("ProductoId,nombreProducto,fabricante,proveedor,peso,volumen,precioProd,enVenta,descripcionProd,SubCategoriaId")] Producto producto)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace ventasweb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["SubCategoriaId"] = new SelectList(_context.SubCategorias, "SubCategoriaId", "nombreSubCategoria", producto.SubCategoriaId);
             return View(producto);
         }
 
@@ -78,6 +82,7 @@ namespace ventasweb.Controllers
             {
                 return NotFound();
             }
+            ViewData["SubCategoriaId"] = new SelectList(_context.SubCategorias, "SubCategoriaId", "nombreSubCategoria", producto.SubCategoriaId);
             return View(producto);
         }
 
@@ -86,9 +91,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("productoId,nombreProducto,fabricante,proveedor,peso,volumen,precioProd,enVenta,descripcionProd,subcategoriaId")] Producto producto)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,nombreProducto,fabricante,proveedor,peso,volumen,precioProd,enVenta,descripcionProd,SubCategoriaId")] Producto producto)
         {
-            if (id != producto.productoId)
+            if (id != producto.ProductoId)
             {
                 return NotFound();
             }
@@ -102,7 +107,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductoExists(producto.productoId))
+                    if (!ProductoExists(producto.ProductoId))
                     {
                         return NotFound();
                     }
@@ -113,6 +118,7 @@ namespace ventasweb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["SubCategoriaId"] = new SelectList(_context.SubCategorias, "SubCategoriaId", "nombreSubCategoria", producto.SubCategoriaId);
             return View(producto);
         }
 
@@ -125,7 +131,8 @@ namespace ventasweb.Controllers
             }
 
             var producto = await _context.productos
-                .FirstOrDefaultAsync(m => m.productoId == id);
+                .Include(p => p.SubCategoria)
+                .FirstOrDefaultAsync(m => m.ProductoId == id);
             if (producto == null)
             {
                 return NotFound();
@@ -147,7 +154,7 @@ namespace ventasweb.Controllers
 
         private bool ProductoExists(int id)
         {
-            return _context.productos.Any(e => e.productoId == id);
+            return _context.productos.Any(e => e.ProductoId == id);
         }
     }
 }

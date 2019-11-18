@@ -34,7 +34,7 @@ namespace ventasweb.Controllers
             }
 
             var tarifaEnvio = await _context.tarifaEnvios
-                .FirstOrDefaultAsync(m => m.idTarifa == id);
+                .FirstOrDefaultAsync(m => m.tarifaEnvioId == id);
             if (tarifaEnvio == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("idTarifa,valorTarifa")] tarifaEnvio tarifaEnvio)
+        public async Task<IActionResult> Create([Bind("tarifaEnvioId,valorTarifa")] tarifaEnvio tarifaEnvio)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace ventasweb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("idTarifa,valorTarifa")] tarifaEnvio tarifaEnvio)
+        public async Task<IActionResult> Edit(int id, [Bind("tarifaEnvioId,valorTarifa")] tarifaEnvio tarifaEnvio)
         {
-            if (id != tarifaEnvio.idTarifa)
+            if (id != tarifaEnvio.tarifaEnvioId)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace ventasweb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!tarifaEnvioExists(tarifaEnvio.idTarifa))
+                    if (!tarifaEnvioExists(tarifaEnvio.tarifaEnvioId))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace ventasweb.Controllers
             }
 
             var tarifaEnvio = await _context.tarifaEnvios
-                .FirstOrDefaultAsync(m => m.idTarifa == id);
+                .FirstOrDefaultAsync(m => m.tarifaEnvioId == id);
             if (tarifaEnvio == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace ventasweb.Controllers
 
         private bool tarifaEnvioExists(int id)
         {
-            return _context.tarifaEnvios.Any(e => e.idTarifa == id);
+            return _context.tarifaEnvios.Any(e => e.tarifaEnvioId == id);
         }
     }
 }
